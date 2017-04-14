@@ -1,60 +1,42 @@
-// Import dependencies
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
-// MongoDB URL from the docker-compose file
-const dbHost = 'mongodb://database/mean-docker';
+/*const mongoose = require('mongoose');
 
-// Connect to mongodb
-mongoose.connect(dbHost);
+ const dbHost = 'mongodb://database/mean-docker';
 
-// create mongoose schema
-const userSchema = new mongoose.Schema({
-    name: String,
-    age: Number
-});
+ mongoose.connect(dbHost);
 
-// create mongoose model
-const User = mongoose.model('User', userSchema);
+ const userSchema = new mongoose.Schema({
+ name: String,
+ age: Number
+ });
+
+ const User = mongoose.model('User', userSchema);*/
+
+
+var users = [];
 
 /* GET api listing. */
-router.get('/', (req, res) => {
+router.get('/', function (req, res) {
     res.send('api works');
 });
 
-/* GET all users. */
-router.get('/users', (req, res) => {
-    User.find({}, (err, users) => {
-    if (err) res.status(500).send(error)
-
-res.status(200).json(users);
-});
+router.get('/users', function (req, res) {
+    res.status(200).json(users);
 });
 
-/* GET one users. */
-router.get('/users/:id', (req, res) => {
-    User.findById(req.param.id, (err, users) => {
-    if (err) res.status(500).send(error)
-
-res.status(200).json(users);
-});
-});
-
-/* Create a user. */
-router.post('/users', (req, res) => {
-    let user = new User({
+router.post('/users', function (req, res) {
+    var user = {
         name: req.body.name,
         age: req.body.age
+    };
+
+    users.push(user);
+
+    res.status(201).json({
+        message: 'User created successfully'
     });
-
-user.save(error => {
-    if (error) res.status(500).send(error);
-
-res.status(201).json({
-    message: 'User created successfully'
-});
-});
 });
 
 module.exports = router;
