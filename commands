@@ -1,0 +1,18 @@
+/--------------------------------------/
+                CLIENT
+/--------------------------------------/
+# create image
+docker build -t b-client .
+
+# run angular app
+docker run -d --name b-client -p 7001:80 b-client
+
+/--------------------------------------/
+                SERVER
+/--------------------------------------/
+
+// build server
+docker build -t express-server:dev .
+
+// run mongodb container
+docker run -d --name mongodb -p 27017:27017 mongo
