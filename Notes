@@ -1,0 +1,83 @@
+Flow:
++ Install jenkins
++ Connect worker to Jenkins
++ Launch docker-compose restart on the server through Jenkins
+4. Build image using jenkins
+5. Push image to the repository
+6. After every commit build image, push to registry and restart server
+
+Setup Jenkins on local PC
+---------------------------------
+# Run jenkins server
+# write sh script and add alias to .bashrc
+jenkins-start
+
+After System Instalation
+--------------------------------
+# copy and execute startup script to server
+scp after-system-instalation.sh root@<IP>:/usr/after-system-instalation.sh
+scp -P 3022 after-system-instalation.sh root@<IP>:/usr/setup/after-system-instalation.sh
+
+# transfer public ssh key to the server
+ssh-copy-id "vitalii@107.170.13.110"
+
+# disable root login
+sudo nano /etc/ssh/sshd_config
+PermitRootLogin no
+service ssh restart
+---------------------------------
+
+/--------------------------------------/
+                OTHER
+/--------------------------------------/
+
+# Development process
+docker-compose -f dev-docker-compose.yml up
+docker-compose -f dev-docker-compose.yml build
+
+# useful UI client for managing mongodb
+docker run -d -p 3000:3000 --name mongoclient mongoclient/mongoclient
+
+# Server folder structure
+On the server only docker-compose should be executeds
+
+/usr
+    /app
+        /client
+        /server
+    /mongo
+
+/--------------------------------------/
+                CLIENT
+/--------------------------------------/
+# create image
+docker build -t b-client .
+
+# tag image
+docker tag <IMAGE_ID> mueees/b-client:<TAG>
+
+# push image to repository
+docker push mueees/b-client
+
+# run angular app
+docker run -d --name b-client -p 7001:80 b-client
+
+/--------------------------------------/
+                SERVER
+/--------------------------------------/
+
+// build server
+docker build -t b-server .
+
+# run server
+docker run -d --name b-server -p 7002:7002 b-server
+
+// run mongodb container
+docker run -d --name mongodb -p 27017:27017 mongo
+
+/--------------------------------------/
+                MONGO
+/--------------------------------------/
+
+# start mongo database with volume connected to host machine
+docker run -p 27018:27017 --name mongo -v /home/mue/Programming/Projects/mean-docker-setup/mongo-db:/data/db -d  mongo

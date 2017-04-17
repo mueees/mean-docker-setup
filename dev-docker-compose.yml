@@ -1,13 +1,13 @@
 version: '2'
 
 services:
-  client:
-    image: b-client
+  b-client:
+    build: client
     ports:
-      - "80:80"
+      - "7001:80"
 
-  server:
-    image: b-server
+  b-server:
+    build: server
     ports:
       - "7002:7002"
 

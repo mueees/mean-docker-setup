@@ -1,21 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
-/*const mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const dbHost = 'mongodb://database/mean-docker';
 
- const dbHost = 'mongodb://database/mean-docker';
+mongoose.connect(dbHost);
 
- mongoose.connect(dbHost);
+const userSchema = new mongoose.Schema({
+    name: String,
+    age: Number
+});
 
- const userSchema = new mongoose.Schema({
- name: String,
- age: Number
- });
-
- const User = mongoose.model('User', userSchema);*/
-
-
-var users = [];
+const User = mongoose.model('User', userSchema);
 
 /* GET api listing. */
 router.get('/', function (req, res) {
@@ -23,7 +19,9 @@ router.get('/', function (req, res) {
 });
 
 router.get('/users', function (req, res) {
-    res.status(200).json(users);
+    User.find({}).then(function (users) {
+        res.status(200).json(users);
+    });
 });
 
 router.post('/users', function (req, res) {
@@ -32,10 +30,10 @@ router.post('/users', function (req, res) {
         age: req.body.age
     };
 
-    users.push(user);
-
-    res.status(201).json({
-        message: 'User created successfully'
+    User.create(user).then(function () {
+        res.status(201).json({
+            message: 'User created successfully! Great!'
+        });
     });
 });
 

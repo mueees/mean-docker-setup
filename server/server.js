@@ -20,7 +20,7 @@ app.use(function (req, res, next) {
 app.use('/', require('./routes/api'));
 
 /**
- * Get port from environment and store in Express.
+ * Get port from environment and store in Express!.
  */
 const port = process.env.PORT || '7002';
 
