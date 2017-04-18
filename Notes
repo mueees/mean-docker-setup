@@ -11,6 +11,7 @@ Setup Jenkins on local PC
 # Run jenkins server
 # write sh script and add alias to .bashrc
 jenkins-start
+docker run -d -p 8080:8080 -p 50000:50000 --name jenkins jenkins
 
 After System Instalation
 --------------------------------
@@ -30,6 +31,9 @@ service ssh restart
 /--------------------------------------/
                 OTHER
 /--------------------------------------/
+
+# Build jenkins image
+docker build -t b-jenkins .
 
 # Development process
 docker-compose -f dev-docker-compose.yml up
