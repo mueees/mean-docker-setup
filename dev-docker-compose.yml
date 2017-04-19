@@ -1,19 +1,36 @@
 version: '2'
 
 services:
-  b-client:
+  client:
     build: client
-    ports:
-      - "7001:80"
+    image: b-client
+    expose:
+     - "80"
+    depends_on:
+      - database
+      - api
 
-  b-server:
-    build: server
-    ports:
-      - "7002:7002"
+  api:
+    build: api
+    image: b-api
+    expose:
+      - "7002"
+    depends_on:
+      - database
 
   database:
     image: mongo
+    expose:
+      - "27017"
+
+  reverse:
+    build: reverse
+    image: b-reverse
     volumes:
-      - "/home/mue/Programming/Projects/mean-docker-setup/mongo-db:/data/db"
+      - "D:/Projects/Experiments/mean-docker-setup/reverse_logs:/var/log/nginx"
+    depends_on:
+      - database
+      - client
+      - api
     ports:
-      - "27018:27017"
+      - "8070:8070"

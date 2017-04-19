@@ -5,7 +5,7 @@ import {Http} from "@angular/http";
     template: require('./home.html')
 })
 export class HomeComponent implements OnInit {
-    API = '';
+    API = '/api';
 
     people: any[] = [];
 

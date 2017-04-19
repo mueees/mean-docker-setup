@@ -3,17 +3,14 @@ version: '2'
 services:
   client:
     image: b-client
-    ports:
-      - "80:80"
 
   server:
     image: b-server
-    ports:
-      - "7002:7002"
 
   database:
     image: mongo
-    volumes:
-      - "/home/mue/Programming/Projects/mean-docker-setup/mongo-db:/data/db"
+
+  reverse:
+    image: b-reverse
     ports:
-      - "27018:27017"
+      - "8070:8070"

@@ -51,6 +51,14 @@ On the server only docker-compose should be executeds
         /server
     /mongo
 
+
+/--------------------------------------/
+                REVERSE
+/--------------------------------------/
+# create image
+docker build -t b-reverse .
+
+
 /--------------------------------------/
                 CLIENT
 /--------------------------------------/

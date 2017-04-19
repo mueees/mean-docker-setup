@@ -14,17 +14,17 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 /* GET api listing. */
-router.get('/', function (req, res) {
+router.get('/api', function (req, res) {
     res.send('api works');
 });
 
-router.get('/users', function (req, res) {
+router.get('/api/users', function (req, res) {
     User.find({}).then(function (users) {
         res.status(200).json(users);
     });
 });
 
-router.post('/users', function (req, res) {
+router.post('/api/users', function (req, res) {
     var user = {
         name: req.body.name,
         age: req.body.age
