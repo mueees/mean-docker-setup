@@ -5,3 +5,15 @@ services:
     image: mueees/b-client
     ports:
       - "80:80"
+
+  server:
+    image: mueees/b-server
+    ports:
+      - "7002:7002"
+
+  database:
+    image: mongo
+    volumes:
+      - "/home/vitalii/app/mongo-data:/data/db"
+    ports:
+      - "27018:27017"
