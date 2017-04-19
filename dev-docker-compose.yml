@@ -24,8 +24,6 @@ services:
     build: reverse
     image: b-reverse
     restart: always
-    volumes:
-      - "D:/Projects/Experiments/mean-docker-setup/reverse_logs:/var/log/nginx"
     depends_on:
       - database
       - client
