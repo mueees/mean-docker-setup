@@ -3,9 +3,8 @@ version: '2'
 services:
   client:
     build: client
+    restart: always
     image: b-client
-    expose:
-     - "80"
     depends_on:
       - database
       - api
@@ -13,19 +12,18 @@ services:
   api:
     build: api
     image: b-api
-    expose:
-      - "7002"
+    restart: always
     depends_on:
       - database
 
   database:
+    restart: always
     image: mongo
-    expose:
-      - "27017"
 
   reverse:
     build: reverse
     image: b-reverse
+    restart: always
     volumes:
       - "D:/Projects/Experiments/mean-docker-setup/reverse_logs:/var/log/nginx"
     depends_on:
