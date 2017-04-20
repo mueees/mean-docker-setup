@@ -3,13 +3,13 @@ version: '2'
 services:
   client:
     restart: always
-    image: b-client
+    image: mueees/b-client
     depends_on:
       - database
       - api
 
   api:
-    image: b-api
+    image: mueees/b-api
     restart: always
     depends_on:
       - database
@@ -19,7 +19,7 @@ services:
     image: mongo
 
   reverse:
-    image: b-reverse
+    image: mueees/b-reverse
     restart: always
     depends_on:
       - database
