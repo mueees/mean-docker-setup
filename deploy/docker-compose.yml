@@ -2,18 +2,28 @@ version: '2'
 
 services:
   client:
-    image: mueees/b-client
-    ports:
-      - "80:80"
+    restart: always
+    image: b-client
+    depends_on:
+      - database
+      - api
 
-  server:
-    image: mueees/b-server
-    ports:
-      - "7002:7002"
+  api:
+    image: b-api
+    restart: always
+    depends_on:
+      - database
 
   database:
+    restart: always
     image: mongo
-    volumes:
-      - "/home/vitalii/app/mongo-data:/data/db"
+
+  reverse:
+    image: b-reverse
+    restart: always
+    depends_on:
+      - database
+      - client
+      - api
     ports:
-      - "27018:27017"
+      - "80:8070"
