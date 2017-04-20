@@ -63,7 +63,7 @@ docker build -t b-reverse .
                 CLIENT
 /--------------------------------------/
 # create image
-docker build -t b-client .
+docker build -t mueees/b-client .
 
 # tag image
 docker tag <IMAGE_ID> mueees/b-client:<TAG>
